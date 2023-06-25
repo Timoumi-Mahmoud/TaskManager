@@ -9,18 +9,20 @@ const express=require('express')
 const app=express()
 app.use(express.static('./public'))
 const tasks=require('./routes/tasks')
-const notfound=require('./middelware/notfound')
+const notFound=require('./middelware/notfound')
+const errorHandlerMiddleware=require('./middelware/error-handler')
 
  
 require('./db/connect')
 
 //middleware
 app.use(express.json())
-app.use(notfound)
+//app.use(notFound)
 //Routes:
 app.use('/api/v1/tasks', tasks)
 
 
+app.use(errorHandlerMiddleware)
 
 
 
