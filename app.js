@@ -9,13 +9,14 @@ const express=require('express')
 const app=express()
 app.use(express.static('./public'))
 const tasks=require('./routes/tasks')
+const notfound=require('./middelware/notfound')
 
  
 require('./db/connect')
 
 //middleware
 app.use(express.json())
-
+app.use(notfound)
 //Routes:
 app.use('/api/v1/tasks', tasks)
 
