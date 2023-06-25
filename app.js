@@ -1,5 +1,5 @@
 console.log('Task Manager App')
-
+///module.exports=app
 
 
 const connectDB =require('./db/connect')
@@ -11,6 +11,7 @@ app.use(express.static('./public'))
 const tasks=require('./routes/tasks')
 const notFound=require('./middelware/notfound')
 const errorHandlerMiddleware=require('./middelware/error-handler')
+const { model } = require('mongoose')
 
  
 require('./db/connect')
