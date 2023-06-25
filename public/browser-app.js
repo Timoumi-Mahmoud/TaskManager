@@ -2,6 +2,10 @@ const tasksDOM = document.querySelector('.tasks')
 const loadingDOM = document.querySelector('.loading-text')
 const formDOM = document.querySelector('.task-form')
 const taskInputDOM = document.querySelector('.task-input')
+const taskStart= document.querySelector('.taskStart')
+const taskCategory=document.querySelector('.taskCategory')
+const taskDescriptionInputDOM=document.querySelector('.task-description')
+//const namee=document.getElementById("bb")
 const formAlertDOM = document.querySelector('.form-alert')
 // Load tasks from /api/tasks
 const showTasks = async () => {
@@ -68,11 +72,22 @@ tasksDOM.addEventListener('click', async (e) => {
 formDOM.addEventListener('submit', async (e) => {
   e.preventDefault()
   const name = taskInputDOM.value
+  const description=taskDescriptionInputDOM.value
+  console.log(name)
+  console.log(description)
+  const start=taskStart.value
+  const category=taskCategory.value
+  console.log(start)
+  console.log(category)
 
   try {
-    await axios.post('/api/v1/tasks', { name })
+    await axios.post('/api/v1/tasks', { name , description, start, category})
+    
+    
     showTasks()
     taskInputDOM.value = ''
+    taskDescriptionInputDOM.value= ''
+    taskStart.value=''
     formAlertDOM.style.display = 'block'
     formAlertDOM.textContent = `success, task added`
     formAlertDOM.classList.add('text-success')
