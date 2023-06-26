@@ -1,0 +1,51 @@
+# Name of our workflow
+name: Production deploy
+
+# Trigger the workflow on push to the main branch
+on:
+  push:
+    branches:
+      - main
+
+# List of jobs
+# A "job" is a set of steps that are executed on the same runner
+jobs:
+  # Name of the job
+  test-and-deploy-to-netlify:
+    # Operating system to run on
+    runs-on: ubuntu-latest
+
+    # List of steps that make up the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Setup Node.js environment
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.x'
+
+    # Install dependencies
+    - name: Install dependencies
+      run: npm install --force
+
+    # Run tests
+    - name:  npm run test
+      run: 
+
+    # Deploy to Netlify
+    - name: Netlify Deploy
+      uses: jsmrcaga/action-netlify-deploy@v2.0.0
+      with:
+        # Auth token to use with netlify
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        # Your Netlify site id
+        NETLIFY_SITE_ID:  ${{ secrets.NETLIFY_SITE_ID }}
+        # Directory where built files are stored
+        build_directory: './dist'
+        # Command to install dependencies
+        install_command: npm install
+        # Command to build static website
+        build_command: npm build   
